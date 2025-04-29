@@ -1,42 +1,20 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <algorithm>
-using namespace std;
+#include<stdio.h>
+#include<stdlib.h>
 
-string smallestPalindromicPermutation(string s) {
-    vector<int> freq(26, 0);
-
-    // Count frequency of each character
-    for (char c : s) {
-        freq[c - 'a']++;
-    }
-
-    string half = "", center = "";
-
-    // Build half of the palindrome and determine the center character if needed
-    for (int i = 0; i < 26; ++i) {
-        if (freq[i] % 2 != 0) {
-            center = string(1, 'a' + i);
-            freq[i]--;
-        }
-        half += string(freq[i] / 2, 'a' + i);
-    }
-
-    string rev_half = half;
-    reverse(rev_half.begin(), rev_half.end());
-
-    return half + center + rev_half;
+void merge(int arr[], int l, int m, int r){
+    
 }
 
-int main() {
-    // Example test cases
-    vector<string> test_cases = {"z", "babab", "daccad"};
+void mergeSort(int arr[], int l, int r){
+    if(l >= r) return ;
+    int m = l + (r - l) /2;
+    mergeSort(arr, l, m);
+    mergeSort(arr, m+1, r);
+    merge(arr, l, m, r);
+}
 
-    for (const string& s : test_cases) {
-        cout << "Input: " << s << endl;
-        cout << "Output: " << smallestPalindromicPermutation(s) << endl << endl;
-    }
-
-    return 0;
+int main(){
+    int arr = {1, 2, 3, 4, 5};
+    int n = sizeof(arr) / sizeof(int);
+    mergeSort(arr, 0, n - 1);
 }

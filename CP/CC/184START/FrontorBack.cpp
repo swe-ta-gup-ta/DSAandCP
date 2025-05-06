@@ -40,25 +40,25 @@ void no() {
 
 
 
-void solve(){
+int solve(){
     int n;
     cin >> n;
-    string s, t;
-    cin >> s >> t;
-    int cnt = 0, cnt2 = 0;
-    for(int i = 0; i < n; i++){
-        if(s[i] == '1' && (s[i] != t[i])) cnt++;
-        if((s[i] != t[i])) cnt2++;
+    vi v(n), cnt(n, 0);
+    f(i, 0, n) cin >> v[i], cnt[v[i]]++;
+    int ans = 1;
+    int mod = 998244353;
+    f(i, 0, n/2){
+        if(cnt[i] + cnt[n - i - 1] != 2) return 0;
+        ans = ans * 2 % mod;
     }
-    if(cnt % 2 == 1 || cnt != cnt2) no();
-    else yes();
+    return ans;
 }
 
 int main() {
     int t;
     cin >> t;
     while(t--){
-        solve();
+        cout << solve() << '\n';
     }
 	return 0;
 }

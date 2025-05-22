@@ -1,37 +1,48 @@
-///recursive TC= exponential - very big 
-//problem link = https://leetcode.com/problems/wildcard-matching/description/
+// Time Complexity: O(N*M)
+// Reason: There are two nested loops
+
+// Space Complexity: O(N*M)
+// Reason: We are using an external array of size ‘N*M’. Stack Space is eliminated.
 
 #include <iostream>
 #include <vector>
 
 using namespace std;
 
-bool solve(string &s, string &t, int i, int j, vector<vector<int>> &dp){
-    
-    if(i == 0 && j == 0) return true;
-    if(j == 0 && i > 0) return false;
-    
-    if(i == 0 && j > 0) {
-        for(int ii = 1; ii <= j; ii++){
-            if(t[ii - 1] != '*') return false;
-        }
-        return true;
-    }
-    if(dp[i][j] != -1) return dp[i][j];
-    
-    if(s[i - 1] == t[j - 1] || t[j - 1] == '?'){
-        return dp[i][j] = solve(s, t, i - 1, j - 1, dp);
-    }
-    if(t[j - 1] == '*'){
-        return dp[i][j] = solve(s, t, i - 1, j, dp) || solve(s, t, i, j - 1, dp);
-    }
-    return dp[i][j] = false;
-}
 
-int isMatch(string &s, string &t) {
+bool isMatch(string &s, string &t) {
+
     int n = s.size(), m = t.size();
-    vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
-    return solve(s, t, n, m, dp);
+
+    vector<vector<bool>> dp(n + 1, vector<bool>(m + 1, 0));
+
+    dp[0][0] = true;
+    for(int i = 1; i <= n; i++) dp[0][i] = false;
+
+    
+    for(int j = 1; j <= m; j++){
+        bool f = true;
+        for(int ii = 1; ii <= j; ii++){
+            if(t[ii - 1] != '*') {
+                f = false;
+                break;
+            }
+        }
+        dp[j][0] = f;
+    }
+
+    for(int j = 1; j <= m; j++){
+        for(int i = 1; i <= n; i++){
+            if(s[i - 1] == t[j - 1] || t[j - 1] == '?'){
+                dp[i][j] = dp[i - 1][j - 1];
+            }
+            else if(t[j - 1] == '*'){
+                return dp[i][j] = dp[i - 1][j] || dp[i][j - 1];
+            }
+            else dp[i][j] = false;
+        }
+    }
+    return dp[m][n];
 }
 
 int main(){

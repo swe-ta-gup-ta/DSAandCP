@@ -1,5 +1,6 @@
 // TC = 2 ^ n
 // SC = O(N)
+///VVVV important question
 
 #include <iostream>
 #include <vector>

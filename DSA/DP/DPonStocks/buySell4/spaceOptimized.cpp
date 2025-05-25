@@ -1,5 +1,5 @@
 // TC = N * 2 * k
-// SC = O(N * 2 * k)
+// SC = O(2 * k)
 
 #include <iostream>
 #include <vector>

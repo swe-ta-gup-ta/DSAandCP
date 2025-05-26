@@ -1,41 +1,40 @@
-
-
 #include <bits/stdc++.h>
+#define ll long long
 using namespace std;
 
-int maxProfit(vector<int>& Arr, int n) {
-    // Creating a 3D DP array of size [n+1][2][3] initialized to 0
-    vector<vector<vector<int>>> dp(n + 1, vector<vector<int>>(2, vector<int>(3, 0)));
-
-    // Base case: dp array is already initialized to 0, covering the base case.
-
-    for (int ind = n - 1; ind >= 0; ind--) {
-        for (int buy = 0; buy <= 1; buy++) {
-            for (int cap = 1; cap <= 2; cap++) {
-                if (buy == 0) { // We can buy the stock
-                    dp[ind][buy][cap] = max(0 + dp[ind + 1][0][cap],
-                                           -Arr[ind] + dp[ind + 1][1][cap]);
-                }
-
-                if (buy == 1) { // We can sell the stock
-                    dp[ind][buy][cap] = max(0 + dp[ind + 1][1][cap],
-                                           Arr[ind] + dp[ind + 1][0][cap - 1]);
-                }
-            }
-        }
-    }
-
-    // The result is stored in dp[0][0][2] which represents maximum profit after the final transaction.
-    return dp[0][0][2];
+void removeMin(vector<ll> &v){
+    ll n = v.size();
+    ll minIdx = min_element(v.begin(), v.end()) - v.begin();
+    v.erase(v.begin() + minIdx);
 }
 
 int main() {
-    vector<int> prices = {3, 3, 5, 0, 0, 3, 1, 4};
-    int n = prices.size();
+	// your code goes here
+	ll t;
+	cin >> t;
+	while(t--){
+	    ll n;
+        cin >> n;
+	    vector<ll> v(2 * n);
+	    for(ll i = 0; i < 2 * n; i++){
+	        cin >> v[i];
+	    }
+	    priority_queue<int> ans;
+        // for(auto i : v) cout << i << " ";
+	    for(ll i = 1; i <= 2 * n; i += 2){
+	        // cout << "*" << endl;
+	        ans.push(v[i]);
+	        ans.push(v[i - 1]);
+	       // removeMin(ans);
+	       ans.pop();
+	    }
+	    ll res = 0;
+	    for(int i = 0; i < n; i++){
+	        res += ans.top();
+	        cout << ans.top();
+            ans.pop();
+	    }
+	    cout << res << endl;
+	}
 
-    // Call the maxProfit function and print the result
-    cout << "The maximum profit that can be generated is " << maxProfit(prices, n);
-
-    return 0;
 }
-

@@ -1,3 +1,8 @@
+// TC = O(N * N) * length of string
+// SC = O (N)
+
+// https://leetcode.com/problems/longest-string-chain/description/
+
 #include <iostream>
 #include <vector>
 #include <algorithm>

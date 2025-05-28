@@ -1,5 +1,5 @@
 // TC = Exponential
-// SC = O(N)
+// SC = O(N * N)
 
 #include <bits/stdc++.h>
 

@@ -2,6 +2,7 @@
     "files.associations": {
         "*.ejs": "html",
         "string": "cpp",
-        "cmath": "cpp"
+        "cmath": "cpp",
+        "complex": "cpp"
     }
 }

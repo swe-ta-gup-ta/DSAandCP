@@ -2,17 +2,19 @@
 
 using namespace std;
 
-int largestRectangleArea(vector<int> &histo){
-    stack<int> st;
+int largestRectangleArea(vector < int > & histo) {
+    stack < int > st;
     int maxA = 0;
     int n = histo.size();
-    for(int i = 0; i <= n; i++){
-        while(!st.empty() && (i == n || histo[st.top()] >= histo[i])){
+    for (int i = 0; i <= n; i++) {
+        while (!st.empty() && (i == n || histo[st.top()] >= histo[i])) {
             int height = histo[st.top()];
             st.pop();
             int width;
-            if(st.empty()) width = i;
-            else width = i - st.top() - 1;
+            if (st.empty())
+                width = i;
+            else
+                width = i - st.top() - 1;
             maxA = max(maxA, width * height);
         }
         st.push(i);
@@ -20,17 +22,30 @@ int largestRectangleArea(vector<int> &histo){
     return maxA;
 }
 
-int countSquares(vector<vector<int>>& matrix) {
-    
+int maximalRectangle(vector<vector<int>>& matrix) {
+    int n = matrix.size();
+    int m = matrix[0].size();
+
+    int maxArea = 0;
+    vector<int> height(m, 0);
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (matrix[i][j] == 1) height[j]++;
+            else height[j] = 0;
+        }
+        int area = largestRectangleArea(height);
+        maxArea = max(maxArea, area);
+    }
+    return maxArea;
 }
 
 int main() {
     int m, n;
     cin >> m >> n;
-    vector<vector<int>> v(m, vector<int>(n));
-    for(int i = 0; i < m; i++){
-        for(int j = 0; j < n; j++) cin >> v[i][j];
+    vector<vector<int>> v(n, vector<int>(m));
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < m; j++) cin >> v[i][j];
     }
 
-    cout << countSquares(v);
+    cout << maximalRectangle(v);
 }

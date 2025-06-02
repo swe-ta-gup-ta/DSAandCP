@@ -1,3 +1,9 @@
+// Time Complexity: O(N*M), where N = total no. of rows and M = total no. of columns
+// Reason: We are basically traversing a 2D matrix with N rows and M columns.
+
+// Space Complexity: O(N*M), where N = total no. of rows and M = total no. of columns
+// Reason: We are using a 2D dp array with N rows and M columns.
+// https://leetcode.com/problems/count-square-submatrices-with-all-ones/
 #include <iostream>
 #include <vector>
 

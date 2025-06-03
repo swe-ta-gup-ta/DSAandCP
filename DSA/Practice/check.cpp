@@ -1,48 +1,57 @@
+
 #include <bits/stdc++.h>
 using namespace std;
 
-int largestRectangleArea(vector < int > & histo) {
-    stack < int > st;
-    int maxA = 0;
-    int n = histo.size();
-    for (int i = 0; i <= n; i++) {
-        while (!st.empty() && (i == n || histo[st.top()] >= histo[i])) {
-            int height = histo[st.top()];
-            st.pop();
-            int width;
-            if (st.empty())
-                width = i;
-            else
-                width = i - st.top() - 1;
-            maxA = max(maxA, width * height);
+bool searchInARotatedSortedArrayII(vector<int>&arr, int k) {
+    int n = arr.size(); // size of the array.
+    int low = 0, high = n - 1;
+    while (low <= high) {
+        int mid = (low + high) / 2;
+
+        //if mid points the target
+        if (arr[mid] == k) return true;
+
+        //Edge case:
+        if (arr[low] == arr[mid] && arr[mid] == arr[high]) {
+            low = low + 1;
+            high = high - 1;
+            continue;
         }
-        st.push(i);
-    }
-    return maxA;
-}
-int maximalAreaOfSubMatrixOfAll1(vector<vector<int>> &mat, int n, int m) {
-    // Write your code here.
-    int maxArea = 0;
-    vector<int> height(m, 0);
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j++) {
-            if (mat[i][j] == 1) height[j]++;
-            else height[j] = 0;
+
+        //if left part is sorted:
+        if (arr[low] <= arr[mid]) {
+            if (arr[low] <= k && k <= arr[mid]) {
+                //element exists:
+                high = mid - 1;
+            }
+            else {
+                //element does not exist:
+                low = mid + 1;
+            }
         }
-        int area = largestRectangleArea(height);
-        maxArea = max(maxArea, area);
+        else { //if right part is sorted:
+            if (arr[mid] <= k && k <= arr[high]) {
+                //element exists:
+                low = mid + 1;
+            }
+            else {
+                //element does not exist:
+                high = mid - 1;
+            }
+        }
     }
-    return maxArea;
+    return false;
 }
 
-int main() {
-
-    vector<vector<int>> mat = {
-        {1, 0, 1, 0, 0}, {1, 0, 1, 1, 1},
-        {1, 1, 1, 1, 1}, {1, 0, 0, 1, 0}
-    };
-    int n = 4, m = 5;
-    int maxArea = maximalAreaOfSubMatrixOfAll1(mat, n, m);
-    cout << "The maximum are is: " << maxArea << "\n";
+int main()
+{
+    vector<int> arr = {1, 2, 1};
+    int k = 1;
+    bool ans = searchInARotatedSortedArrayII(arr, k);
+    if (!ans)
+        cout << "Target is not present.\n";
+    else
+        cout << "Target is present in the array.\n";
     return 0;
 }
+

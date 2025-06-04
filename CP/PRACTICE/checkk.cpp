@@ -1,30 +1,33 @@
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
-int main() {
-	// your code goes here
-	int t;
-	cin >> t;
-	while(t--){
-	    string s;
-		cin >> s;
-		string t = s;
-        int n = s.size();
-        string ans = "";
-        while(true){
-            if(t.size() == 2) break;
-            for(int i = 0; i < t.size() - 1; i++){
-                int x = t[i] - '0';
-                int y = t[i+1] -'0';
-                char a = ((x + y) % 10) + '0';
-                ans += a;
-            }
-            t = ans;
-            cout<<ans.size()<<"*"<<t.size()<<endl;
-            ans = "";
-        }
-        if(t[0] == t[1]) cout<<true<<endl;
-        else cout<< false<<endl;
-	}
+string canReach(long long N, long long M, long long A, long long B) {
+    long long numerator = N * B - M;
+    long long denominator = B - A;
 
+    if (denominator == 0) return "No";  // Avoid division by zero, though A < B as per constraint
+
+    if (numerator % denominator != 0) {
+        return "No";
+    }
+
+    long long x = numerator / denominator;
+
+    if (x >= 0 && x <= N) {
+        return "Yes";
+    }
+    return "No";
+}
+
+int main() {
+    int T;
+    cin >> T;
+
+    while (T--) {
+        long long N, M, A, B;
+        cin >> N >> M >> A >> B;
+        cout << canReach(N, M, A, B) << endl;
+    }
+
+    return 0;
 }

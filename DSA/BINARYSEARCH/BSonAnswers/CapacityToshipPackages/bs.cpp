@@ -1,4 +1,4 @@
-// TC = O(maxEle * n)
+// TC = O(log(maxEle) * n)
 // SC = O(1)
 // https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/description/
 

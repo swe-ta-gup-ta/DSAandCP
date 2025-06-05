@@ -1,22 +1,35 @@
-// TC = O(log(n))
+// TC = O(log(maxEle(arr)) * (n))
 // SC = O(1)
 
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <cmath>
+#include <climits>
 
 using namespace std;
 
-int koko(vector<int> &piles, int h) {
-    int ans = -1;
-    int low = 1, high = num;
+long long calculateTotalHours(vector<int> &v, int hourly) {
+    long long totalH = 0;
+    int n = v.size();
+    for (int i = 0; i < n; i++) {
+        totalH += ceil((double)(v[i]) / (double)(hourly));
+    }
+    return totalH;
+}
+
+int minimumRateToEatBananas(vector<int>& piles, int h) { 
+    int maxi = *max_element(piles.begin(), piles.end());
+    int low = 1, high = maxi, ans = INT_MAX;
+
     while(low <= high){
         int mid = (low + high) / 2;
-        int x = 1;
-        for(int i = 0; i < n; i++) x *= mid;
-        if(x == num) return mid;
-        else if(x < num) low = mid + 1;
-        else high = mid - 1;
+        long long totHrs = calculateTotalHours(piles, mid);
+        if(totHrs <= h) {
+            ans = mid;
+            high = mid -1;
+        }
+        else low = mid + 1;
     }
     return ans;
 }
@@ -29,5 +42,5 @@ int main(){
     int h;
     cin >> h;
 
-    cout << koko(piles, h);
+    cout << minimumRateToEatBananas(piles, h);
 }

@@ -35,7 +35,7 @@ int main() {
 	    int n, x;
 	    cin >> n >> x;
 	    vector<int> v = solve(n, x);
-		for(auto i : v) cout << i << " ";
+		for(auto i : v) cout << i  << " ";
 		cout << "\n";
 	}
 }

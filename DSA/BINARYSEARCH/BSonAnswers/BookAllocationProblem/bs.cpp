@@ -6,6 +6,11 @@
 
 // Space Complexity:  O(1) as we are not using any extra space to solve this problem.
 
+
+//THE PROBLEM 1.Book Allocation Problem
+            //   2.Split array - Largest Sum
+            //   3.Painter's partition THESE THREEE PROBLEMS ARE EXACT SAME
+
 #include <iostream>
 #include <vector>
 #include <algorithm>

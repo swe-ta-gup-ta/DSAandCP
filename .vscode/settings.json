@@ -4,6 +4,7 @@
         "string": "cpp",
         "cmath": "cpp",
         "complex": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "vector": "cpp"
     }
 }

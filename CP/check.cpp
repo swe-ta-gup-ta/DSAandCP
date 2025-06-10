@@ -1,30 +1,38 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 
-int solve(vector<int>& A) {
-    sort(A.begin(), A.end());
-    int n = A.size();
-    int ans = n; // case where we just kill all monsters individually
-    for (int i = 0; i < n; ++i) {
-        int x = A[i];
-        int kills = n - i;
-        ans = min(ans, x + kills - 1);
+const int MOD = 998244353;
+
+
+int solve(string s) {
+    int n = s.size();
+    vector<int> dp(n + 1, 0);
+    dp[0] = 1;
+    for(int i = 1; i <n ;i++){
+        dp[i + 1] = (dp[i + 1] + dp[i]) % MOD;
+        if(i + 3 < n){
+            if ((s[i] == s[i + 2]) && (s[i + 1] == s[i + 3]) && (s[i] != s[i + 1])) {
+                dp[i + 3] = (dp[i] + dp[i + 3]) % MOD;
+            }
+        }
     }
-    return ans;
+    return dp[n];
 }
 
 int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
     int T;
     cin >> T;
+
     while (T--) {
         int N;
-        cin >> N;
-        vector<int> A(N);
-        for (int i = 0; i < N; ++i)
-            cin >> A[i];
-        cout << solve(A) << endl;
+        string S;
+        cin >> N >> S;
+
+        cout << solve(S) << "\n";
     }
+
     return 0;
 }

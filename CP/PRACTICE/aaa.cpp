@@ -1,31 +1,19 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<int> solve(int N, int X) {
-    vector<int> P(N + 1, -1);  // 1-based indexing
-    vector<bool> used(N + 1, false);
+int cntParry(vector<int> &a, vector<int> &b, int x, int i, int p, int d){
+	if(i >= a.size()) return 0;
 
-    for (int i = 1; i <= N; ++i) {
-        int v = X | i;
-        if (v <= N && (v | i) == X && !used[v]) {
-            P[i] = v;
-            used[v] = true;
-        }
-    }
+	if(x < a[i]) return -1e9;
+	int ans = 0;
 
-    // Fill remaining positions with unused values
-    int idx = 1;
-    for (int i = 1; i <= N; ++i) {
-        if (P[i] == -1) {
-            while (used[idx]) idx++;
-            P[i] = idx;
-            used[idx] = true;
-        }
-    }
-
-    return vector<int>(P.begin() + 1, P.end()); // drop index 0
+	ans = cntParry(a, b, x, i + 1, p, d);
+	if(x >= b[i]){
+		int temp = 1 + cntParry(a, b, x - 1, i + 1, p, d);
+		if(temp != -1e9) ans = max(ans, temp);
+	}
+	return ans;
 }
-
 
 int main() {
 	// your code goes here
@@ -34,8 +22,15 @@ int main() {
 	while(t--){
 	    int n, x;
 	    cin >> n >> x;
-	    vector<int> v = solve(n, x);
-		for(auto i : v) cout << i  << " ";
-		cout << "\n";
+	    vector<int> a(n), b(n);
+	    for(int i = 0; i < n; i++) cin >> a[i];
+	    for(int i = 0; i < n; i++) cin >> b[i];
+		int ans = 0;
+		int low = 0, high = n;
+		while(low <= high){
+			int mid = (low + high) / 2;
+			
+		}
 	}
+
 }
